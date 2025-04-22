@@ -1,35 +1,27 @@
-import { useState } from "react";
-
-function Counter(){
-
-  // const [count, setCount] = useState(0)
-  const [obj, setObj] = useState({name: 'KD', age: 25, count: 0})
-
-  function increment(offset){
-    // setCount((count) => count+ offset)
-    setObj((obj) => {
-      return {
-        ...obj,
-        count: obj.count + offset
-      }
+import { useState } from "react"
+export default function Counter(){
+    // const [count, setCount] = useState(50)
+    const [isLoading, setIsLoading] = useState(false)
+    const [obj, setObj] = useState({
+        count: 50,
+        name: 'Ali',
+        age:40
     })
-  }
-  function decrement(offset){
-    // setCount(count => count - offset)
-  }
+
+    function increment(offset){
+        setObj((prev) => ({
+            ...prev,
+            count: prev.count + offset
+        }))
+    }
+
     return (
-      <>
-        <h1>Counter</h1>
-        <button onClick={() => decrement(1)}>Decrement</button>
-        <h3>{obj.count}</h3>
-        <button onClick={() => increment(5)}>Increment</button>
-
-        <h3>
-        {obj.name } - {obj.age}
-          </h3>
-      </>
-
+        <>
+            <h1>Counter</h1>
+            <button onClick={() => setCount(count-1)}>-</button>
+            <h4>{obj.count}</h4>
+            <button onClick={() =>increment(5)}>+</button>
+            <h3>{obj.name} - {obj.age}</h3>
+        </>
     )
-  }
-
-export default Counter;
+}

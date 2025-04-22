@@ -1,98 +1,104 @@
-import Clock from "./Clock"
-import Counter from "./Counter"
-// import lib, { PI as PY, callMe } from "./lib"
-import {Component} from "react"
-import TypeSpeedTracker from "./TypeSpeedTracker"
-import SmartHome from "./SmartHome"
-import Products from "./Products"
-// Two ways to create a component
-// 1. Function Component
-// 2. Class Component
+// Two ways to create components
+// 1. Function components
+// 2. Class components
+
+import {Component} from 'react'
+import lib, { PI as PY } from './lib'
+import Counter from './Counter';
+import Clock from './Clock';
+import TypeSpeedTracker from './TypeSpeedTracker';
+import SmartHome from './SmartHome';
+
+import Register from './Register';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import NavBar from './NavBar';
+import Home from './pages';
+import About from './pages/About';
+import ProductDetails from './ProductDetails';
+import Categories from './pages/Categories';
+import ProductByCategory from './ProductsbyCategory';
+import NotFound from './pages/NotFound';
+import withCentered from './CenteredHOC';
+import HoverCounter from './pages/HoverCounter';
+import CounterX from './CounterX';
+
+// class App extends Component {
+//   constructor(props){
+//     this.state = {
+//       name: 'KD'
+//     }
+//   }
 
 
-
-// Function Component
-function Button({ title, clickHandler, color }) {
-  return <button
-    style={{ backgroundColor: color || 'blue' }}
-    onClick={clickHandler}>
-    {title}
-  </button>
-}
-
-// function InnerComponent(){
-//   return (
-//     <div>
-//       <h3>Inner Component</h1>
-//       <span></span>
-//     </div>
-//   )
-// }
-
-
-// function OuterComponent(){
-//   return (
-//     <div>
-//       <h1>Outer Component</h1>
-//       <InnerComponent />
-//     </div>
-//   )
-// }
-
-// Button.defaultProps = {
-//   color: 'blue',
-//   title: 'Click Me'
-// }
-
-// Button.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   clickHandler: PropTypes.func.isRequired,
-//   color: PropTypes.string
-// }
-
-// Class Component
-// class Button extends React.Component {
+//   changeName(){
+//     this.setState({
+//       name: 'Ali'
+//     })
+//   }
 //   render() {
-//     return <button>Click Me</button>
+//     return (
+//       <h1>Hello World!</h1>
+//     )
 //   }
 // }
 
+function Button({color, title, clickHandler}) {
+  return <button style={{backgroundColor: color}} onClick={clickHandler}>{title}</button>
+}
+
+// Button.defaultProps = {
+//   color: 'blue',
+//   title: 'Click me'
+// }
+
+// Button.propTypes = {
+//   color: PropTypes.string,
+//   title: PropTypes.string,
+//   clickHandler: PropTypes.func
+// }
+
+// Function component
 function App() {
-  // const name = 'KD'
-  // function getName() {
-  //   return 'Koibhi'
-  // }
-  // const res = name && (<h1>Hello {name}</h1>)
-  // const products = [
-  //   { id: 1, name: 'Laptop' },
-  //   { id: 2, name: 'Mobile' },
-  //   { id: 3, name: 'Camera' },
-  // ]
+  const name = 'KD';
+  function getName(){
+    return 'Ali';
+  }
+  const res = name && <h1>Hello {name}!</h1>
+
+  const CenteredHome = withCentered(Home);
+  const CenteredAbout = withCentered(About);
   return (
     <>
-      {/* <h1>Hello {name}</h1>
-      <h1>Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}>{product.name}</li>
-        ))}
-      </ul>
-      <Button color={'orange'} title={'Click Me'} clickHandler={() => alert('Clicked!')} />
-      <Button color={'green'} title='Save' clickHandler={() => alert('Saved!')} />*/}
-      {/* <Button color={'green'} title='Call Me' clickHandler={callMe} />  */}
-      
-      {/* <Counter/> */}
-      {/* <span>{lib.fullName}</span>
-      <span>{lib.PI}</span> */}
+      {/* <h1>Hello {lib.callMe()}!</h1>
+      <h2>{PY}</h2> */}
+      {/* {res} */}
+      {/* <Button color={'green'} title={'Click me'} clickHandler={() => alert('You clicked me!')} />
+      <Button color={'red'} title="Save" clickHandler={() => alert('Saved!')} /> */}
+      {/* <Counter /> */}
       {/* <Clock /> */}
-
-      {/* <TypeSpeedTracker /> */}
-      {/* <SmartHome /> */}
-      <Products />
+      {/* <TypeSpeedTracker/> */}
+      {/* <SmartHome/> */}
+      {/* <Products /> */}
+      {/* <Register /> */}
+      <BrowserRouter>
+        
+        <NavBar />
+        <Routes>
+          <Route path="*" element={<NotFound/>} />
+          <Route path="/" element={<CenteredHome titleX={'KUCHBHI'}/>} />
+          <Route path="/hcounter" element={<CounterX render={(count, increment) => <HoverCounter count={count} increment={increment} />} />} />
+          <Route path="/products/:pid/" element={<ProductDetails />} />
+          <Route path="/categories" element={<Categories />}>
+            <Route path=":categoryName" element={<ProductByCategory />} />
+          </Route>
+          <Route path="/about" element={<CenteredAbout/>} />
+        </Routes>
+      </BrowserRouter>
       
     </>
-
   )
 }
+
+
 
 export default App

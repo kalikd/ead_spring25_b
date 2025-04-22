@@ -1,11 +1,14 @@
- const PI = 3.145
- function callMe() {
-  alert('Call Me')
+export const fullName = 'John Doe';
+export function callMe(){
+    return 'Something!'
 }
 
- const fullName = 'KD'
-export default  {
+export const PI = 3.14;
+
+export default {
+    PI,
     fullName,
-    callMe,
-    PI
-};
+    callMe
+}
+
+
